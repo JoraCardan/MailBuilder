@@ -5,20 +5,20 @@ import { Router } from 'react-router';
 import routes from '../routes';
 
 export default class Root extends Component {
-    render() {
-        const { store, history } = this.props;
-        return (
-            <Provider store={store}>
-                <div>
-                    <Router history={history} routes={routes} />
-                    <DevTools />
-                </div>
-            </Provider>
-        );
-    }
+  render() {
+    const { store, history } = this.props;
+    return (
+      <Provider store={store}>
+        <div>
+          <Router history={history} routes={routes} />
+          <DevTools />
+        </div>
+      </Provider>
+    );
+  }
 }
 
 Root.propTypes = {
-    store: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
