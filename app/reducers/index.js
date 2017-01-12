@@ -1,20 +1,9 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import * as types from '../actions/types';
 
-const filter = (state = '', action) => {
-  switch (action.type) {
-    case types.FILTER:
-      return action.filter;
-    default:
-      return state;
-  }
-};
+import headerReducer from './headerReducer';
 
-
-const rootReducer = combineReducers({
-  filter,
+export default combineReducers({
+  headerReducer,
   routing
 });
-
-export default rootReducer;

@@ -30,11 +30,11 @@ module.exports = {
           'process.env.NODE_ENV': JSON.stringify('development')
         })
     ],
-    eslint: {
-        configFile: '.eslintrc',
-        failOnWarning: false,
-        failOnError: false
-    },
+    // eslint: {
+    //     configFile: '.eslintrc',
+    //     failOnWarning: false,
+    //     failOnError: false
+    // },
     module: {
         preLoaders: [
             {

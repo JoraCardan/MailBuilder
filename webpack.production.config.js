@@ -54,11 +54,11 @@ module.exports = {
     ],
 
     // ESLint options
-    eslint: {
-        configFile: '.eslintrc',
-        failOnWarning: false,
-        failOnError: true
-    },
+    // eslint: {
+    //     configFile: '.eslintrc',
+    //     failOnWarning: false,
+    //     failOnError: true
+    // },
 
     module: {
         // Runs before loaders
