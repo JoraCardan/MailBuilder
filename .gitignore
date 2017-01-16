@@ -35,3 +35,6 @@ npm-debug.log
 
 #ngrok
 ngrok
+
+#build
+app/build/

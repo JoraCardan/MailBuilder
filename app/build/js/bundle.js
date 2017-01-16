@@ -1,15 +1,86 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Macros = function () {
+  function Macros() {
+    _classCallCheck(this, Macros);
+
+    this._macros = [{ 'key': '[[VOORNAAM]]', 'value': 'Voornaam kandidaat' }, { 'key': '[[ACHTERNAAM]]', 'value': 'Achternaam kandidaat' }, { 'key': '[[EMAIL]]', 'value': 'E-mail adres kandidaat' }, { 'key': '[[AFZENDER]]', 'value': 'E-mail adres afzender' }, { 'key': '[[RECRUITER_TEL]]', 'value': 'Telefoonnummer van afzender' }, { 'key': '[[LINK]]', 'value': 'Link naar vacature' }, { 'key': '[[VACATURE_TITEL]]', 'value': 'Vacature titel' }, { 'key': '[[COMPANY]]', 'value': 'Bedrijfsnaam' }, { 'key': '[[COMPANY_URL]]', 'value': 'Bedrijfs website' }, { 'key': '[[COMPANY_LOGO]]', 'value': 'Bedrijfs logo' }, { 'key': '[[QUESTIONS]]', 'value': 'Link naar vacature vragen' }, { 'key': '[[FOOTER]]', 'value': 'Standaard mail afsluiting' }, { 'key': '[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden' }];
+  }
+
+  _createClass(Macros, [{
+    key: 'getItem',
+    value: function getItem(name) {
+      var _item = this._getConvertedMacro(name);
+      if (_item.length) {
+        return _item[0];
+      }
+      return false;
+    }
+  }, {
+    key: '_getConvertedMacro',
+    value: function _getConvertedMacro(name) {
+      var self = this;
+      return this._macros.filter(function (obj, index) {
+        return obj.key == name;
+      });
+    }
+  }, {
+    key: 'items',
+    get: function get() {
+      return this._macros;
+    }
+  }]);
+
+  return Macros;
+}();
+
+exports.default = Macros;
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _macro = require('./components/macro');
+
+var _macro2 = _interopRequireDefault(_macro);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(_jquery2.default);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-},{"jquery":2}],2:[function(require,module,exports){
+var MailBuilder = function () {
+  function MailBuilder() {
+    _classCallCheck(this, MailBuilder);
+
+    this.macros = new _macro2.default();
+    // macros.getItem('[[COMPANY_LOGO]]')
+  }
+
+  _createClass(MailBuilder, [{
+    key: 'build',
+    value: function build() {
+      return true;
+    }
+  }]);
+
+  return MailBuilder;
+}();
+
+},{"./components/macro":1,"jquery":3}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/
@@ -10231,6 +10302,6 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
-},{}]},{},[1])
+},{}]},{},[2])
 
 //# sourceMappingURL=bundle.js.map

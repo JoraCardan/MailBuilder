@@ -1,3 +1,15 @@
 import $ from 'jquery';
 
-console.log($);
+import Macros from './components/macro';
+
+class MailBuilder {
+  constructor () {
+    this.macros = new Macros();
+    // macros.getItem('[[COMPANY_LOGO]]')
+  }
+
+  build() {
+    return true;
+  }
+}
+
