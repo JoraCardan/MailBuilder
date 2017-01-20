@@ -1,0 +1,12 @@
+// Sample compressed stylesheet:
+
+// Normalize
+article, aside, footer, header, main, nav, section {display: block;}
+
+// jQueryUI
+.ui-helper-hidden { display: none; }
+
+// Custom Styles
+.myCustomStyleStart {display: none;}
+// INCLUDE ALL MY CLASSES HERE IN THE Formats menu!
+.myCustomStyleEnd {display: none;}

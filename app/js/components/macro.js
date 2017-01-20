@@ -10,15 +10,22 @@ export default class Macros {
       {'key':'[[VACATURE_TITEL]]', 'value': 'Vacature titel'},
       {'key':'[[COMPANY]]', 'value': 'Bedrijfsnaam'},
       {'key':'[[COMPANY_URL]]', 'value': 'Bedrijfs website'},
-      {'key':'[[COMPANY_LOGO]]', 'value': 'Bedrijfs logo'},
+      {'key':'[[COMPANY_LOGO]]', 'value': 'https://www.youngcapital.nl/public_images/Image/company_logo/logo-yc.png'},
       {'key':'[[QUESTIONS]]', 'value': 'Link naar vacature vragen'},
       {'key':'[[FOOTER]]', 'value': 'Standaard mail afsluiting'},
-      {'key':'[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden'}
+      {'key':'[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden'},
+      {'key':'[[SOLICTTER_DIRECT]]', 'value': '<a href="#">Direct Link</a>'}
     ]
+
+    this._regex = new RegExp('\[\[[A-Z_]*\]\]', 'g');
   }
 
   get items() {
     return this._macros;
+  }
+
+  get regex() {
+    return this._regex;
   }
 
   getItem(name) {

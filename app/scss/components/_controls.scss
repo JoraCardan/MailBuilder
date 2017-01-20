@@ -1,0 +1,28 @@
+.controls {
+  background: $white;
+  font-family: $font;
+  font-size: 16px;
+  padding: 5%;
+  position: fixed;
+  right: 5%;
+  text-align: center;
+  top: 5%;
+
+  &__btn {
+    background: $black;
+    border: 0;
+    border-radius: 0;
+    color: $white;
+    cursor: pointer;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0 auto 10px;
+    padding: 10px 15px;
+    transition: background .4s;
+
+    &:hover {
+      background: $orange;
+    }
+  }
+}
