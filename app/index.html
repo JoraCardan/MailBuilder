@@ -8,10 +8,18 @@
 <body>
 
   <div class="controls">
-    <button class="controls__btn" type="button">Convert Macros</button>
-    <button class="controls__btn" type="button">Get HTML</button>
+    <button class="controls__btn" type="button" data-convert-macros>Convert Macros</button>
+    <button class="controls__btn" type="button" data-get-result>Get HTML</button>
+  </div>
+
+  <div id="resultBox" data-result-box class="lightbox">
+    <div class="lightbox__wrap">
+      <button type="button" data-result-close class="lightbox__close">&times;</button>
+      <textarea data-result-output id="output" class="lightbox__textbox" disabled="true"></textarea>
+    </div>
   </div>
   <div id="app" style="background-color:#E0E0E0;">
+
     <!--[if mso]>
     <table border="0" cellpadding="0" cellspacing="0" width="600" align="center" style="width:600px;">
       <tr>

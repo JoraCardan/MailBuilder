@@ -13,7 +13,10 @@ var Macros = function () {
   function Macros() {
     _classCallCheck(this, Macros);
 
-    this._macros = [{ 'key': '[[VOORNAAM]]', 'value': 'Voornaam kandidaat' }, { 'key': '[[ACHTERNAAM]]', 'value': 'Achternaam kandidaat' }, { 'key': '[[EMAIL]]', 'value': 'E-mail adres kandidaat' }, { 'key': '[[AFZENDER]]', 'value': 'E-mail adres afzender' }, { 'key': '[[RECRUITER_TEL]]', 'value': 'Telefoonnummer van afzender' }, { 'key': '[[LINK]]', 'value': 'Link naar vacature' }, { 'key': '[[VACATURE_TITEL]]', 'value': 'Vacature titel' }, { 'key': '[[COMPANY]]', 'value': 'Bedrijfsnaam' }, { 'key': '[[COMPANY_URL]]', 'value': 'Bedrijfs website' }, { 'key': '[[COMPANY_LOGO]]', 'value': 'https://www.youngcapital.nl/public_images/Image/company_logo/logo-yc.png' }, { 'key': '[[QUESTIONS]]', 'value': 'Link naar vacature vragen' }, { 'key': '[[FOOTER]]', 'value': 'Standaard mail afsluiting' }, { 'key': '[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden' }, { 'key': '[[SOLICTTER_DIRECT]]', 'value': '<a href="#">Direct Link</a>' }];
+    this._macros = [{ 'key': '[[VOORNAAM]]', 'value': 'Voornaam kandidaat' }, { 'key': '[[ACHTERNAAM]]', 'value': 'Achternaam kandidaat' }, { 'key': '[[EMAIL]]', 'value': 'E-mail adres kandidaat' }, { 'key': '[[AFZENDER]]', 'value': 'E-mail adres afzender' }, { 'key': '[[RECRUITER_TEL]]', 'value': 'Telefoonnummer van afzender' }, { 'key': '[[LINK]]', 'value': 'Link naar vacature' }, { 'key': '[[VACATURE_TITEL]]', 'value': 'Vacature titel' }, { 'key': '[[COMPANY]]', 'value': 'Bedrijfsnaam' }, { 'key': '[[COMPANY_URL]]', 'value': 'Bedrijfs website' }, { 'key': '[[COMPANY_LOGO]]', 'value': 'https://www.youngcapital.nl/public_images/Image/company_logo/logo-yc.png' }, { 'key': '[[QUESTIONS]]', 'value': 'Link naar vacature vragen' }, { 'key': '[[FOOTER]]', 'value': 'Standaard mail afsluiting' }, { 'key': '[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden' }, {
+      'key': '[[SOLICTTER_DIRECT]]',
+      'value': '<a href="#" style="cursor:auto;color:#ff7700;font-family: Arial, Helvetica, sans-serif, \'Open Sans\';font-size:13px;line-height:45px;text-align:right;">Direct Link</a>'
+    }];
 
     this._regex = new RegExp('\[\[[A-Z_]*\]\]', 'g');
   }
@@ -83,6 +86,15 @@ var MailBuilder = function () {
 
     this.SELECTORS = {
       app: (0, _jquery2.default)('#app'),
+      macro: {
+        btn: '[data-convert-macros]'
+      },
+      results: {
+        btn: '[data-get-result]',
+        container: '[data-result-box]',
+        textarea: '[data-result-output]',
+        closeBtn: '[data-result-close]'
+      },
       editors: {
         row: {
           selector: '[data-editable-row]',
@@ -116,9 +128,15 @@ var MailBuilder = function () {
     };
 
     this.ignored = [];
+    this.parseHTML();
     this.bindEvents();
-    this.initPlugins();
   }
+
+  /**
+   * app initialization
+   * @return {[type]} [description]
+   */
+
 
   _createClass(MailBuilder, [{
     key: 'initPlugins',
@@ -129,13 +147,60 @@ var MailBuilder = function () {
         tinymce.init(configuration);
       });
     }
+
+    /**
+     * event Binder
+     */
+
   }, {
     key: 'bindEvents',
     value: function bindEvents() {
       var self = this;
 
-      this.parseHTML();
+      (0, _jquery2.default)(document).on('click', self.SELECTORS.macro.btn, function (e) {
+        e.preventDefault();
+        self.parseHTML();
+      });
+
+      (0, _jquery2.default)(document).on('click', self.SELECTORS.results.btn, function (e) {
+        e.preventDefault();
+
+        var result = self.getResult();
+        (0, _jquery2.default)(self.SELECTORS.results.container).addClass('open');
+        (0, _jquery2.default)(self.SELECTORS.results.textarea).val(result);
+      });
+
+      (0, _jquery2.default)(document).on('click', self.SELECTORS.results.closeBtn, function (event) {
+        (0, _jquery2.default)(self.SELECTORS.results.container).removeClass('open');
+      });
     }
+
+    /**
+     * getResult get the html cotent of the page
+     * @return {String} html string
+     */
+
+  }, {
+    key: 'getResult',
+    value: function getResult() {
+      var output = this.SELECTORS.app.clone();
+      var child = '';
+      var cParent = '';
+      var self = this;
+
+      output.find('form').each(function (index, el) {
+        child = (0, _jquery2.default)(el).html();
+        cParent = (0, _jquery2.default)(el).parent();
+        cParent.html(child);
+      });
+
+      return output.html();
+    }
+
+    /**
+     * parseHTML replace reserved macros with actual demo content
+     */
+
   }, {
     key: 'parseHTML',
     value: function parseHTML() {
@@ -155,16 +220,6 @@ var MailBuilder = function () {
 
       app.html(html);
       this.initPlugins();
-    }
-  }, {
-    key: 'submitHandler',
-    value: function submitHandler(data) {
-      console.log(data);
-    }
-  }, {
-    key: 'build',
-    value: function build() {
-      return true;
     }
   }]);
 

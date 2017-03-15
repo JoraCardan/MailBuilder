@@ -11,6 +11,15 @@ class MailBuilder {
 
     this.SELECTORS = {
       app: $('#app'),
+      macro: {
+        btn: '[data-convert-macros]',
+      },
+      results: {
+        btn: '[data-get-result]',
+        container: '[data-result-box]',
+        textarea: '[data-result-output]',
+        closeBtn: '[data-result-close]'
+      },
       editors: {
         row: {
           selector: '[data-editable-row]',
@@ -47,10 +56,14 @@ class MailBuilder {
     }
 
     this.ignored = [];
+    this.parseHTML();
     this.bindEvents();
-    this.initPlugins();
   }
 
+  /**
+   * app initialization
+   * @return {[type]} [description]
+   */
   initPlugins() {
     const options = this.SELECTORS.editors;
 
@@ -59,12 +72,53 @@ class MailBuilder {
     })
   }
 
+  /**
+   * event Binder
+   */
   bindEvents() {
     const self = this;
 
-    this.parseHTML();
+    $(document).on('click', self.SELECTORS.macro.btn, (e) => {
+      e.preventDefault();
+      self.parseHTML();
+    })
+
+    $(document).on('click', self.SELECTORS.results.btn, (e) => {
+      e.preventDefault();
+
+      var result = self.getResult();
+      $(self.SELECTORS.results.container).addClass('open');
+      $(self.SELECTORS.results.textarea).val(result);
+
+    })
+
+    $(document).on('click', self.SELECTORS.results.closeBtn, function(event) {
+      $(self.SELECTORS.results.container).removeClass('open');
+    });
   }
 
+  /**
+   * getResult get the html cotent of the page
+   * @return {String} html string
+   */
+  getResult() {
+    let output = this.SELECTORS.app.clone();
+    let child = '';
+    let cParent = '';
+    const self = this;
+
+    output.find('form').each(function(index, el) {
+      child = $(el).html();
+      cParent = $(el).parent();
+      cParent.html(child);
+    });
+
+    return output.html();
+  }
+
+  /**
+   * parseHTML replace reserved macros with actual demo content
+   */
   parseHTML() {
     const regex = this.macros.regex;
     const app = this.SELECTORS.app;
@@ -81,14 +135,6 @@ class MailBuilder {
 
     app.html(html);
     this.initPlugins();
-  }
-
-  submitHandler(data) {
-    console.log(data);
-  }
-
-  build() {
-    return true;
   }
 }
 

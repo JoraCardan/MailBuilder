@@ -14,7 +14,10 @@ export default class Macros {
       {'key':'[[QUESTIONS]]', 'value': 'Link naar vacature vragen'},
       {'key':'[[FOOTER]]', 'value': 'Standaard mail afsluiting'},
       {'key':'[[DIENSTVERBAND]]', 'value': 'Lijst van dienstverbanden'},
-      {'key':'[[SOLICTTER_DIRECT]]', 'value': '<a href="#">Direct Link</a>'}
+      {
+        'key':'[[SOLICTTER_DIRECT]]',
+        'value': '<a href="#" style="cursor:auto;color:#ff7700;font-family: Arial, Helvetica, sans-serif, \'Open Sans\';font-size:13px;line-height:45px;text-align:right;">Direct Link</a>'
+      }
     ]
 
     this._regex = new RegExp('\[\[[A-Z_]*\]\]', 'g');
